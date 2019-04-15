@@ -1,8 +1,13 @@
 #ifndef FOREIGNLIBRARY_H
 #define FOREIGNLIBRARY_H
 
+#include <ffi.h>
+#include <unordered_map>
+
 #include <Godot.hpp>
 #include <Reference.hpp>
+#include <Array.hpp>
+#include <Variant.hpp>
 #include <String.hpp>
 
 namespace godot {
@@ -12,6 +17,8 @@ class ForeignLibrary : public Reference {
 
 private:
     void *handle = 0;
+    std::unordered_map<uint64_t, ffi_cif*> cif_map;
+    ffi_type* get_ffi_type(String name);
 
 public:
     static void _register_methods();
@@ -26,9 +33,8 @@ public:
     void _init();
 
     void setHandle(void *handle);
-    int invoke(String method);
-    String invoke_str(String method);
-    bool invoke_bool(String method);
+    void prepare(String method, String retType, Array argTypes);
+    Variant invoke(String method, Array args);
 
     void _process(float delta);
 };

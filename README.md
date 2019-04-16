@@ -35,7 +35,7 @@ print(lib.invoke('add3d', [3.0, 4.0, 5.0]))  # Prints 12
 # Pointers
 # Assuming we have the following shared library functions:
 # uint32_t* allocateInt(uint32_t value) { return new int32_t(value) }
-# uint32_t allocateInt(uint32_t *value) { return *value; }
+# uint32_t retrieveInt(uint32_t *value) { return *value; }
 
 lib.define('allocateInt', 'pointer', ['sint32'])
 lib.define('retrieveInt', 'sint32', ['pointer'])

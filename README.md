@@ -19,10 +19,13 @@ Lastly, use it in Godot as follows:
 ```gdscript
 var foreigner = preload('res://contrib/foreigner/foreigner.gdns').new()
 var library = foreigner.open('libsteam_api.so')
-prints('Library:', library)
-prints(library.prepare('SteamAPI_Init', 'void', []))
+
+library.define('SteamAPI_Init', 'void', [])
 prints(library.invoke('SteamAPI_Init'))
-prints(library.prepare('SteamAPI_IsSteamRunning', 'uchar', []))
+
+library.define('SteamAPI_IsSteamRunning', 'uchar', [])
+prints(library.invoke('SteamAPI_IsSteamRunning'))  # Prints 1
+prints(library.invoke('SteamAPI_IsSteamRunning'))  # Prints 1
 prints(library.invoke('SteamAPI_IsSteamRunning'))  # Prints 1
 ```
 

@@ -33,7 +33,7 @@ public:
     void _init();
 
     void setHandle(void *handle);
-    void prepare(String method, String retType, Array argTypes);
+    void define(String method, String retType, PoolStringArray argTypes);
     Variant invoke(String method, Array args);
 
     void _process(float delta);

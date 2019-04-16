@@ -7,7 +7,7 @@ reloadable=true
 
 [entry]
 
-X11.64="res://contrib/foreigner/foreigner.so"
+X11.64="res://foreigner.so"
 
 [dependencies]
 

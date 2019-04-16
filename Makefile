@@ -1,6 +1,7 @@
 # Yup, I have them riiight there.
 GODOTCPP_PATH ?= ../../../../godot-cpp
 GODOT_PATH ?= ../../../../godot
+GODOT_BINARY = $(GODOT_PATH)/bin/godot.x11.tools.64
 
 FFI_INCLUDES = $(shell pkg-config --cflags libffi)
 INCLUDES= \
@@ -18,4 +19,15 @@ all: foreigner.so
 
 foreigner.so: src/*.cpp src/*.h
 	gcc -shared src/*.cpp -o foreigner.so $(LIBS) $(INCLUDES) $(FLAGS)
-	#nm -D foreigner.so
+
+testlib.so: testlib/*.cpp
+	gcc -shared testlib/*.cpp -o testlib.so
+
+test: foreigner.so testlib.so
+	$(GODOT_BINARY) -s test/test.gd
+
+clean:
+	rm -f *.so
+
+.PHONY: test clean
+

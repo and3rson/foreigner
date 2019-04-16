@@ -17,6 +17,21 @@ Then edit the `foreigner.gdns` file to match the path of your built `foreigner.s
 Lastly, use it in Godot as follows:
 
 ```gdscript
+# Generic example
+var foreigner = preload('res://contrib/foreigner/foreigner.gdns').new()
+var library = foreigner.open('testlib.so')
+
+library.define('getNumber', 'sint32', [])
+print(lib.invoke('getNumber'))  # prints 42
+
+lib.define('add2i', 'sint32', ['sint32', 'sint32'])
+print(lib.invoke('add2i', [6, 8]))  # Prints 14
+
+lib.define('add3d', 'double', ['double', 'double', 'double'])
+print(lib.invoke('add3d', [3.0, 4.0, 5.0]))  # Prints 12
+
+
+# Steam example
 var foreigner = preload('res://contrib/foreigner/foreigner.gdns').new()
 var library = foreigner.open('libsteam_api.so')
 
@@ -25,7 +40,6 @@ prints(library.invoke('SteamAPI_Init'))
 
 library.define('SteamAPI_IsSteamRunning', 'uchar', [])
 prints(library.invoke('SteamAPI_IsSteamRunning'))  # Prints 1
-prints(library.invoke('SteamAPI_IsSteamRunning'))  # Prints 1
-prints(library.invoke('SteamAPI_IsSteamRunning'))  # Prints 1
+
 ```
 

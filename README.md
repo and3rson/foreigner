@@ -22,6 +22,10 @@ Lastly, use it in Godot as follows:
 
 ```gdscript
 # Generic example
+# See ffi.h of libffi for a list of
+# possible argument types.
+# One extra type is available - "string".
+# It allows passing & returning char* and const char*.
 
 var foreigner = preload('res://contrib/foreigner/foreigner.gdns').new()
 var library = foreigner.open('testlib.so')

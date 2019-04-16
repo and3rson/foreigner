@@ -42,6 +42,14 @@ func _init():
     print(result)
     ASSERT(result == 12.0)
 
+    print('##### Pointers')
+    print('* Testing int retrieveInt(allocateInt(int))')
+    lib.define('allocateInt', 'pointer', ['sint32'])
+    lib.define('retrieveInt', 'sint32', ['pointer'])
+    result = lib.invoke('retrieveInt', [lib.invoke('allocateInt', [1337])])
+    print(result)
+    ASSERT(result == 1337)
+
     print('Testing finished')
     quit()
 

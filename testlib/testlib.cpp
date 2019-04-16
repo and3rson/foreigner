@@ -31,3 +31,11 @@ extern "C" const char* getMessage() {
     return "Bar";
 }
 
+extern "C" int32_t* allocateInt(int32_t value) {
+    return new int32_t(value);
+}
+
+extern "C" int32_t retrieveInt(int32_t *ptr) {
+    return *ptr;
+}
+

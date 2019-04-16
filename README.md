@@ -60,3 +60,8 @@ prints(library.invoke('SteamAPI_IsSteamRunning'))  # Prints 1
 
 ```
 
+# Known limitations
+
+- Only basic types are currently supported: int, float and pointers.
+- Only Linux is supported right now. This is easy to improve.
+- Memory leaks are possible. This needs some minor attention.

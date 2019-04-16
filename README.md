@@ -53,11 +53,11 @@ print(result)  # Prints 1337
 
 
 # Strings
-lib.define('getConstString', 'string', [])
-print(lib.invoke('getConstString', []))  # Prints 'Const Bar'
+lib.define('getMessage', 'string', [])
+print(lib.invoke('getMessage', []))  # Prints Hello world!
 
 lib.define('joinStrings', 'string', ['string', 'string'])
-print(lib.invoke('joinStrings', ['Foo', 'bar']))  # Prints 'Foobar'
+print(lib.invoke('joinStrings', ['Foo', 'bar']))  # Prints Foobar
 
 
 # Steam example

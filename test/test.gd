@@ -56,10 +56,10 @@ func _init():
     print('##### Strings')
 
     print('* Testing const char* getConstString()')
-    lib.define('getConstString', 'string', [])
-    result = lib.invoke('getConstString', [])
+    lib.define('getMessage', 'string', [])
+    result = lib.invoke('getMessage', [])
     print(result)
-    ASSERT(result == 'Const Bar')
+    ASSERT(result == 'Hello world!')
 
     print('* Testing char* joinStrings(char*, char*)')
     lib.define('joinStrings', 'string', ['string', 'string'])

@@ -2,10 +2,11 @@
 
 This repo contains a WIP variant of a FFI adapter for Godot.
 
-# Compiling
+# Compiling & testing
 
 ```bash
 make GODOTCPP_PATH=path/to/godot/cpp/sources GODOT_PATH=path/to/godot/sources
+make test
 ```
 
 # Usage

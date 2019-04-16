@@ -3,6 +3,7 @@
 
 #include <ffi.h>
 #include <unordered_map>
+#include <vector>
 
 #include <Godot.hpp>
 #include <Reference.hpp>
@@ -12,12 +13,20 @@
 
 namespace godot {
 
+typedef struct {
+    ffi_cif* cif;
+    std::vector<std::string> argtypes;
+    std::string restype;
+} signature_t;
+
 class ForeignLibrary : public Reference {
     GODOT_CLASS(ForeignLibrary, Reference)
 
 private:
     void *handle = 0;
-    std::unordered_map<uint64_t, ffi_cif*> cif_map;
+    //std::unordered_map<uint64_t, ffi_cif*> cif_map;
+    //std::unordered_map<uint64_t,
+    std::unordered_map<uint64_t, signature_t*> signatures;
     ffi_type* get_ffi_type(String name);
 
 public:

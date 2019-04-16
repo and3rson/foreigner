@@ -18,6 +18,8 @@ func _init():
 
     var result
 
+    print('##### General tests')
+
     print('* Testing int getNumber(void)')
     lib.define('getNumber', 'sint32', [])
     result = lib.invoke('getNumber')
@@ -43,12 +45,27 @@ func _init():
     ASSERT(result == 12.0)
 
     print('##### Pointers')
+
     print('* Testing int retrieveInt(allocateInt(int))')
     lib.define('allocateInt', 'pointer', ['sint32'])
     lib.define('retrieveInt', 'sint32', ['pointer'])
     result = lib.invoke('retrieveInt', [lib.invoke('allocateInt', [1337])])
     print(result)
     ASSERT(result == 1337)
+
+    print('##### Strings')
+
+    print('* Testing const char* getConstString()')
+    lib.define('getConstString', 'string', [])
+    result = lib.invoke('getConstString', [])
+    print(result)
+    ASSERT(result == 'Const Bar')
+
+    print('* Testing char* joinStrings(char*, char*)')
+    lib.define('joinStrings', 'string', ['string', 'string'])
+    result = lib.invoke('joinStrings', ['Foo', 'bar'])
+    print(result)
+    ASSERT(result == 'Foobar')
 
     print('Testing finished')
     quit()

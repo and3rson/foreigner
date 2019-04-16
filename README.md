@@ -52,6 +52,14 @@ result = lib.invoke('retrieveInt', [lib.invoke('allocateInt', [1337])])
 print(result)  # Prints 1337
 
 
+# Strings
+lib.define('getConstString', 'string', [])
+print(lib.invoke('getConstString', []))  # Prints 'Const Bar'
+
+lib.define('joinStrings', 'string', ['string', 'string'])
+print(lib.invoke('joinStrings', ['Foo', 'bar']))  # Prints 'Foobar'
+
+
 # Steam example
 
 var foreigner = preload('res://contrib/foreigner/foreigner.gdns').new()

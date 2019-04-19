@@ -19,6 +19,8 @@ typedef struct {
     std::string restype;
 } signature_t;
 
+typedef std::unordered_map<uint64_t, signature_t*> signature_map_t;
+
 class ForeignLibrary : public Reference {
     GODOT_CLASS(ForeignLibrary, Reference)
 
@@ -26,7 +28,7 @@ private:
     void *handle = 0;
     //std::unordered_map<uint64_t, ffi_cif*> cif_map;
     //std::unordered_map<uint64_t,
-    std::unordered_map<uint64_t, signature_t*> signatures;
+    signature_map_t signature_map;
     ffi_type* get_ffi_type(String name);
 
 public:
@@ -40,6 +42,7 @@ public:
     ~ForeignLibrary();
 
     void _init();
+    //void _notification(int64_t what);
 
     void setHandle(void *handle);
     void define(String method, String retType, PoolStringArray argTypes);

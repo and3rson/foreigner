@@ -39,6 +39,7 @@ ffi_type* ForeignLibrary::get_ffi_type(String name) {
 }
 
 void ForeignLibrary::_register_methods() {
+    //register_method("_notification", &ForeignLibrary::_notification);
     register_method("define", &ForeignLibrary::define);
     register_method("invoke", &ForeignLibrary::invoke);
     register_method("_process", &ForeignLibrary::_process);
@@ -48,7 +49,20 @@ ForeignLibrary::ForeignLibrary() {
 }
 
 ForeignLibrary::~ForeignLibrary() {
+    Godot::print("Destroying ForeignLibrary");
+    for (signature_map_t::iterator it = signature_map.begin(); it != signature_map.end(); it++) {
+        signature_t *signature = it->second;
+        delete signature->cif;
+        delete signature;
+    }
+    if (this->handle) {
+        dlclose(this->handle);
+    }
 }
+
+//void ForeignLibrary::_notification(int64_t what) {
+//    Godot::print("Notification %d", what);
+//}
 
 void ForeignLibrary::_init() {
 }
@@ -75,7 +89,7 @@ void ForeignLibrary::define(String method, String retType, PoolStringArray argTy
     signature->restype = std::string(retType.alloc_c_string());
     ffi_prep_cif(cif, FFI_DEFAULT_ABI, argTypes.size(), this->get_ffi_type(retType), arg_types);
     signature->cif = cif;
-    this->signatures[method.hash()] = signature;
+    this->signature_map[method.hash()] = signature;
 
     Godot::print("Defined function " + method + "(" + argString + ") -> " + retType);
 }
@@ -101,7 +115,7 @@ Variant ForeignLibrary::invoke(String method, Array args) {
         return 0;
     }
 
-    if (!this->signatures.count(method.hash())) {
+    if (!this->signature_map.count(method.hash())) {
         Godot::print_error(
                 "ForeignLibrary: method " + method + " not prepared yet, cannot call",
                 __FUNCTION__, __FILE__, __LINE__
@@ -109,7 +123,7 @@ Variant ForeignLibrary::invoke(String method, Array args) {
         return 0;
     }
 
-    signature_t *signature = this->signatures[method.hash()];
+    signature_t *signature = this->signature_map[method.hash()];
 
     void *arg_values[signature->cif->nargs];
     uint64_t *arg_values_data[signature->cif->nargs];

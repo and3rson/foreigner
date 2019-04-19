@@ -13,12 +13,13 @@ Foreigner::Foreigner() {
 }
 
 Foreigner::~Foreigner() {
+    Godot::print("Destroying Foreigner");
 }
 
 void Foreigner::_init() {
 }
 
-ForeignLibrary* Foreigner::open(String path) {
+Ref<ForeignLibrary> Foreigner::open(String path) {
     //if (this->handle) {
     //    // Another shared library is already open, close it
     //    dlclose(this->handle);
@@ -40,8 +41,9 @@ ForeignLibrary* Foreigner::open(String path) {
     }
 
     ForeignLibrary *library = ForeignLibrary::_new();
+    Ref<ForeignLibrary> ref = Ref<ForeignLibrary>::__internal_constructor(library);
     library->setHandle(handle);
-    return library;
+    return ref;
 }
 
 void Foreigner::_process(float delta) {

@@ -24,7 +24,7 @@ public:
 
     void _init();
 
-    ForeignLibrary* open(String path);
+    Ref<ForeignLibrary> open(String path);
 
     void _process(float delta);
 };

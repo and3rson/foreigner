@@ -11,6 +11,8 @@
 #include <Variant.hpp>
 #include <String.hpp>
 
+#include "crossplatform.h"
+
 namespace godot {
 
 typedef struct {
@@ -25,7 +27,7 @@ class ForeignLibrary : public Reference {
     GODOT_CLASS(ForeignLibrary, Reference)
 
 private:
-    void *handle = 0;
+    HANDLE handle = 0;
     //std::unordered_map<uint64_t, ffi_cif*> cif_map;
     //std::unordered_map<uint64_t,
     signature_map_t signature_map;

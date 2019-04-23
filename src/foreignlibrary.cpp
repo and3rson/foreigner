@@ -56,7 +56,7 @@ ForeignLibrary::~ForeignLibrary() {
         delete signature;
     }
     if (this->handle) {
-        dlclose(this->handle);
+        close_library(this->handle);
     }
 }
 
@@ -105,7 +105,8 @@ Variant ForeignLibrary::invoke(String method, Array args) {
         return 0;
     }
 
-    void *sym = dlsym(this->handle, method.alloc_c_string());
+    // TODO: Cache symbols. Or are they cached already?
+    void *sym = get_symbol(this->handle, method.alloc_c_string());
 
     if (!sym) {
         Godot::print_error(

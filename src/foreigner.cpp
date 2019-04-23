@@ -1,5 +1,3 @@
-#include <dlfcn.h>
-
 #include "foreigner.h"
 
 using namespace godot;
@@ -30,11 +28,12 @@ Ref<ForeignLibrary> Foreigner::open(String path) {
     // Attempt to open shared library
     Godot::print("Foreigner: Loading shared library " + path);
     // TODO: Windows/Linux/Mac
-    void *handle = dlopen(path.alloc_c_string(), RTLD_LAZY);
-    if (dlerror()) {
+    HANDLE handle = open_library(path.alloc_c_string());
+    char *error = open_library_error();
+    if (error) {
         // Opening failed
         Godot::print_error(
-                String("Foreigner: Failed to load " + path),
+                String("Foreigner: Failed to load " + path + ": " + String(error)),
                 __FUNCTION__, __FILE__, __LINE__
         );
         return 0;

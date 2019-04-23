@@ -12,7 +12,7 @@ INCLUDES= \
 		  -L$(GODOTCPP_PATH)/bin \
 		  $(FFI_INCLUDES)
 
-LIBS = -lgodot-cpp.linux.debug.64 -lstdc++ -lffi
+LIBS = -lgodot-cpp.linux.debug.64 -lstdc++ -lffi -static-libstdc++ -static-libgcc
 FLAGS = -ggdb -fPIC
 
 all: foreigner.so

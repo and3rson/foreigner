@@ -22,6 +22,7 @@ typedef struct {
 } signature_t;
 
 typedef std::unordered_map<uint64_t, signature_t*> signature_map_t;
+typedef std::unordered_map<uint64_t, SYMBOL> symbol_map_t;
 
 class ForeignLibrary : public Reference {
     GODOT_CLASS(ForeignLibrary, Reference)
@@ -31,6 +32,7 @@ private:
     //std::unordered_map<uint64_t, ffi_cif*> cif_map;
     //std::unordered_map<uint64_t,
     signature_map_t signature_map;
+    symbol_map_t symbol_map;
     ffi_type* get_ffi_type(String name);
 
 public:

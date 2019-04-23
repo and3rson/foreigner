@@ -105,26 +105,28 @@ Variant ForeignLibrary::invoke(String method, Array args) {
         return 0;
     }
 
-    // TODO: Cache symbols. Or are they cached already?
-    void *sym = get_symbol(this->handle, method.alloc_c_string());
+    void *sym;
+    if (!(sym = this->symbol_map[method.hash()])) {
+        sym = get_symbol(this->handle, method.alloc_c_string());
 
-    if (!sym) {
-        Godot::print_error(
-                "ForeignLibrary: unresolved symbol - " + method,
-                __FUNCTION__, __FILE__, __LINE__
-        );
-        return 0;
+        if (!sym) {
+            Godot::print_error(
+                    "ForeignLibrary: unresolved symbol - " + method,
+                    __FUNCTION__, __FILE__, __LINE__
+            );
+            return 0;
+        }
+        this->symbol_map[method.hash()] = sym;
     }
 
-    if (!this->signature_map.count(method.hash())) {
+    signature_t *signature;
+    if (!(signature = this->signature_map[method.hash()])) {
         Godot::print_error(
                 "ForeignLibrary: method " + method + " not prepared yet, cannot call",
                 __FUNCTION__, __FILE__, __LINE__
         );
         return 0;
     }
-
-    signature_t *signature = this->signature_map[method.hash()];
 
     void *arg_values[signature->cif->nargs];
     uint64_t *arg_values_data[signature->cif->nargs];

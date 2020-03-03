@@ -32,13 +32,13 @@ var foreigner = preload('res://contrib/foreigner/foreigner.gdns').new()
 var library = foreigner.open('testlib.so')
 
 library.define('getNumber', 'sint32', [])
-print(lib.invoke('getNumber'))  # prints 42
+print(library.invoke('getNumber'))  # prints 42
 
-lib.define('add2i', 'sint32', ['sint32', 'sint32'])
-print(lib.invoke('add2i', [6, 8]))  # Prints 14
+library.define('add2i', 'sint32', ['sint32', 'sint32'])
+print(library.invoke('add2i', [6, 8]))  # Prints 14
 
-lib.define('add3d', 'double', ['double', 'double', 'double'])
-print(lib.invoke('add3d', [3.0, 4.0, 5.0]))  # Prints 12
+library.define('add3d', 'double', ['double', 'double', 'double'])
+print(library.invoke('add3d', [3.0, 4.0, 5.0]))  # Prints 12
 
 
 # Pointers
@@ -46,18 +46,18 @@ print(lib.invoke('add3d', [3.0, 4.0, 5.0]))  # Prints 12
 # uint32_t* allocateInt(uint32_t value) { return new int32_t(value) }
 # uint32_t retrieveInt(uint32_t *value) { return *value; }
 
-lib.define('allocateInt', 'pointer', ['sint32'])
-lib.define('retrieveInt', 'sint32', ['pointer'])
-result = lib.invoke('retrieveInt', [lib.invoke('allocateInt', [1337])])
+library.define('allocateInt', 'pointer', ['sint32'])
+library.define('retrieveInt', 'sint32', ['pointer'])
+result = library.invoke('retrieveInt', [library.invoke('allocateInt', [1337])])
 print(result)  # Prints 1337
 
 
 # Strings
-lib.define('getMessage', 'string', [])
-print(lib.invoke('getMessage', []))  # Prints Hello world!
+library.define('getMessage', 'string', [])
+print(library.invoke('getMessage', []))  # Prints Hello world!
 
-lib.define('joinStrings', 'string', ['string', 'string'])
-print(lib.invoke('joinStrings', ['Foo', 'bar']))  # Prints Foobar
+library.define('joinStrings', 'string', ['string', 'string'])
+print(library.invoke('joinStrings', ['Foo', 'bar']))  # Prints Foobar
 
 
 # Steam example

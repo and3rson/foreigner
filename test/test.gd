@@ -12,7 +12,7 @@ func _init():
     ASSERT(foreigner)
     prints('Foreigner:', foreigner)
 
-    var lib = foreigner.open('testlib.so')
+    var lib = foreigner.open('./testlib.so')
     ASSERT(lib)
     print('Library:', lib)
 

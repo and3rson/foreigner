@@ -133,6 +133,7 @@ Variant ForeignLibrary::invoke(String method, Array args) {
     // TODO: Suport more arg types
     String str;
     char* pStr;
+    PoolByteArray pba;
     for (int i = 0; i < args.size(); i++) {
         switch(args[i].get_type()) {
             case Variant::Type::NIL:
@@ -155,6 +156,13 @@ Variant ForeignLibrary::invoke(String method, Array args) {
                 pStr[str.length()] = 0;
                 arg_values[i] = new char*(pStr);
                 break;
+            case Variant::Type::POOL_BYTE_ARRAY:
+                // Mostly copy pasta from STRING case above.
+                pba = args[i];
+                pStr = new char[pba.size()];
+                memcpy(pStr, pba.read().ptr(), pba.size());
+                arg_values[i] = new char*(pStr); // TODO: Figure out if Ref and/or pba.write().ptr() helpful.
+                break;
             default:
                 // Variant::___get_type_name(args[i].get_type())
                 Godot::print_error(
@@ -174,6 +182,7 @@ Variant ForeignLibrary::invoke(String method, Array args) {
     // Release memory of allocated variables
     for (int i = 0; i < signature->cif->nargs; i++) {
         // TODO: Fix this
+        // TODO: Also handle PoolByteArray here.
         if (signature->argtypes[i] == "string") {
             delete (char*)(*(char**)arg_values[i]);
         } else {

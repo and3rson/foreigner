@@ -9,7 +9,7 @@ This repo contains a WIP variant of a FFI adapter for Godot.
 make GODOTCPP_PATH=path/to/godot/cpp/sources GODOT_PATH=path/to/godot/sources
 # Build testlib.so with some exposed methods
 # and run Godot script that loads and tests testlib.so via foreigner API.
-make test
+make test GODOTCPP_PATH=path/to/godot/cpp/sources GODOT_PATH=path/to/godot/sources
 ```
 
 # Usage

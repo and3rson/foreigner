@@ -71,6 +71,13 @@ func _init():
     print(result)
     ASSERT(result == 'Foobar')
 
+    print('##### PoolByteArray')
+
+    print('* Testing char* joinStrings(char*, PoolByteArray)')
+    result = lib.invoke('joinStrings', ['Foo', PoolByteArray([0x41, 0x00])])
+    print(result)
+    ASSERT(result == 'FooA')
+
     print('Testing finished')
     quit()
 

@@ -29,7 +29,7 @@ Lastly, use it in Godot as follows:
 # as char* and const char*.
 
 var foreigner = preload('res://contrib/foreigner/foreigner.gdns').new()
-var library = foreigner.open('testlib.so')
+var library = foreigner.open('./testlib.so')
 
 library.define('getNumber', 'sint32', [])
 print(library.invoke('getNumber'))  # prints 42
@@ -63,7 +63,7 @@ print(library.invoke('joinStrings', ['Foo', 'bar']))  # Prints Foobar
 # Steam example
 
 var foreigner = preload('res://contrib/foreigner/foreigner.gdns').new()
-var library = foreigner.open('libsteam_api.so')
+var library = foreigner.open('./libsteam_api.so')
 
 library.define('SteamAPI_Init', 'void', [])
 prints(library.invoke('SteamAPI_Init'))

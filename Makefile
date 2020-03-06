@@ -3,6 +3,19 @@ GODOTCPP_PATH ?= ../godot-cpp
 GODOT_PATH ?= ../godot
 GODOT_BINARY ?= $(GODOT_PATH)/bin/godot.x11.tools.64
 
+UNAME := $(shell uname -s)
+ifeq ($(UNAME),Darwin)
+	PLATFORM := osx
+	CXX := clang++
+	LIB_SUFFIX := dylib
+else
+	PLATFORM := linux
+	CXX := g++
+	LIB_SUFFIX := so
+endif
+
+FOREIGNER_LIB := foreigner.$(LIB_SUFFIX)
+
 FFI_INCLUDES = $(shell pkg-config --cflags --libs libffi)
 INCLUDES= \
 		  -I$(GODOTCPP_PATH)/godot_headers \

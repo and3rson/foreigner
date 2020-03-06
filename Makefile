@@ -8,10 +8,12 @@ ifeq ($(UNAME),Darwin)
 	PLATFORM := osx
 	CXX := clang++
 	LIB_SUFFIX := dylib
+	EXTRA_FLAGS := -Og
 else
 	PLATFORM := linux
 	CXX := g++
 	LIB_SUFFIX := so
+	EXTRA_FLAGS :=
 endif
 
 FOREIGNER_LIB := foreigner.$(LIB_SUFFIX)
@@ -26,7 +28,7 @@ INCLUDES= \
 		  $(FFI_INCLUDES)
 
 LIBS = -lgodot-cpp.$(PLATFORM).debug.64 -lstdc++ -lffi -static-libstdc++ -static-libgcc
-FLAGS = -ggdb -fPIC
+FLAGS = -ggdb -fPIC $(EXTRA_FLAGS)
 
 all: $(FOREIGNER_LIB)
 
@@ -34,7 +36,7 @@ $(FOREIGNER_LIB): src/*.cpp src/*.h
 	$(CXX) -shared src/*.cpp -o $(FOREIGNER_LIB) $(LIBS) $(INCLUDES) $(FLAGS)
 
 testlib.so: testlib/*.cpp
-	$(CXX) -shared testlib/*.cpp -o testlib.so
+	$(CXX) -shared testlib/*.cpp -o testlib.so $(EXTRA_FLAGS)
 
 test: $(FOREIGNER_LIB) testlib.so
 	$(GODOT_BINARY) --no-window -s test/test.gd

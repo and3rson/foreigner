@@ -9,11 +9,13 @@ ifeq ($(UNAME),Darwin)
 	CXX := clang++
 	LIB_SUFFIX := dylib
 	EXTRA_FLAGS := -Og
+	EXTRA_LIBS :=
 else
 	PLATFORM := linux
 	CXX := g++
 	LIB_SUFFIX := so
 	EXTRA_FLAGS :=
+	EXTRA_LIBS := -lstdc++ -static-libstdc++ -static-libgcc
 endif
 
 FOREIGNER_LIB := foreigner.$(LIB_SUFFIX)
@@ -27,7 +29,7 @@ INCLUDES= \
 		  -L$(GODOTCPP_PATH)/bin \
 		  $(FFI_INCLUDES)
 
-LIBS = -lgodot-cpp.$(PLATFORM).debug.64 -lstdc++ -lffi -static-libstdc++ -static-libgcc
+LIBS = -lgodot-cpp.$(PLATFORM).debug.64 -lffi $(EXTRA_LIBS)
 FLAGS = -ggdb -fPIC $(EXTRA_FLAGS)
 
 all: $(FOREIGNER_LIB)

@@ -1,7 +1,7 @@
 # Yup, I have them riiight there.
 GODOTCPP_PATH ?= ../godot-cpp
 GODOT_PATH ?= ../godot
-GODOT_BINARY = $(GODOT_PATH)/bin/godot.x11.tools.64
+GODOT_BINARY ?= $(GODOT_PATH)/bin/godot.x11.tools.64
 
 FFI_INCLUDES = $(shell pkg-config --cflags libffi)
 INCLUDES= \

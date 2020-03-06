@@ -5,7 +5,7 @@ GODOT_BINARY = $(GODOT_PATH)/bin/godot.x11.tools.64
 
 FFI_INCLUDES = $(shell pkg-config --cflags libffi)
 INCLUDES= \
-		  -I$(GODOT_PATH)/modules/gdnative/include \
+		  -I$(GODOTCPP_PATH)/godot_headers \
 		  -I$(GODOTCPP_PATH)/include \
 		  -I$(GODOTCPP_PATH)/include/core \
 		  -I$(GODOTCPP_PATH)/include/gen \

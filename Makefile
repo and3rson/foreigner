@@ -3,7 +3,7 @@ GODOTCPP_PATH ?= ../godot-cpp
 GODOT_PATH ?= ../godot
 GODOT_BINARY ?= $(GODOT_PATH)/bin/godot.x11.tools.64
 
-FFI_INCLUDES = $(shell pkg-config --cflags libffi)
+FFI_INCLUDES = $(shell pkg-config --cflags --libs libffi)
 INCLUDES= \
 		  -I$(GODOTCPP_PATH)/godot_headers \
 		  -I$(GODOTCPP_PATH)/include \

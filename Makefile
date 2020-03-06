@@ -25,7 +25,7 @@ INCLUDES= \
 		  -L$(GODOTCPP_PATH)/bin \
 		  $(FFI_INCLUDES)
 
-LIBS = -lgodot-cpp.linux.debug.64 -lstdc++ -lffi -static-libstdc++ -static-libgcc
+LIBS = -lgodot-cpp.$(PLATFORM).debug.64 -lstdc++ -lffi -static-libstdc++ -static-libgcc
 FLAGS = -ggdb -fPIC
 
 all: $(FOREIGNER_LIB)

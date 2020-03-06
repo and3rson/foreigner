@@ -31,10 +31,10 @@ FLAGS = -ggdb -fPIC
 all: foreigner.so
 
 foreigner.so: src/*.cpp src/*.h
-	gcc -shared src/*.cpp -o foreigner.so $(LIBS) $(INCLUDES) $(FLAGS)
+	$(CXX) -shared src/*.cpp -o foreigner.so $(LIBS) $(INCLUDES) $(FLAGS)
 
 testlib.so: testlib/*.cpp
-	gcc -shared testlib/*.cpp -o testlib.so
+	$(CXX) -shared testlib/*.cpp -o testlib.so
 
 test: foreigner.so testlib.so
 	$(GODOT_BINARY) --no-window -s test/test.gd

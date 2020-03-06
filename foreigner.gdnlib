@@ -8,7 +8,9 @@ reloadable=true
 [entry]
 
 X11.64="res://foreigner.so"
+OSX.64="res://foreigner.dylib"
 
 [dependencies]
 
 X11.64=[  ]
+OSX.64=[  ]

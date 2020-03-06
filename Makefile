@@ -28,15 +28,15 @@ INCLUDES= \
 LIBS = -lgodot-cpp.linux.debug.64 -lstdc++ -lffi -static-libstdc++ -static-libgcc
 FLAGS = -ggdb -fPIC
 
-all: foreigner.so
+all: $(FOREIGNER_LIB)
 
-foreigner.so: src/*.cpp src/*.h
-	$(CXX) -shared src/*.cpp -o foreigner.so $(LIBS) $(INCLUDES) $(FLAGS)
+$(FOREIGNER_LIB): src/*.cpp src/*.h
+	$(CXX) -shared src/*.cpp -o $(FOREIGNER_LIB) $(LIBS) $(INCLUDES) $(FLAGS)
 
 testlib.so: testlib/*.cpp
 	$(CXX) -shared testlib/*.cpp -o testlib.so
 
-test: foreigner.so testlib.so
+test: $(FOREIGNER_LIB) testlib.so
 	$(GODOT_BINARY) --no-window -s test/test.gd
 
 clean:

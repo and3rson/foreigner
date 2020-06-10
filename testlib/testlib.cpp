@@ -13,7 +13,7 @@ extern "C" int32_t sqr(int32_t n) {
 }
 
 extern "C" int32_t add2i(int32_t a, int32_t b) {
-    printf("Called add2i(%d)\n", a, b);
+    printf("Called add2i(%d, %d)\n", a, b);
     return a + b;
 }
 

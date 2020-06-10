@@ -10,12 +10,14 @@ ifeq ($(UNAME),Darwin)
 	LIB_SUFFIX := dylib
 	EXTRA_FLAGS := -Og
 	EXTRA_LIBS :=
-else
+else ifeq ($(UNAME),Linux)
 	PLATFORM := linux
 	CXX := g++
 	LIB_SUFFIX := so
 	EXTRA_FLAGS :=
 	EXTRA_LIBS := -lstdc++ -static-libstdc++ -static-libgcc
+else
+$(error Unrecognized platform name.)
 endif
 
 FOREIGNER_LIB := foreigner.$(LIB_SUFFIX)

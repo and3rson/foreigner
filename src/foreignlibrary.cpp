@@ -1,5 +1,3 @@
-#include <dlfcn.h>
-
 #include "foreignlibrary.h"
 
 using namespace godot;

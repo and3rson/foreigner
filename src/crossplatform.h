@@ -17,7 +17,7 @@ typedef void* HANDLE;
 typedef void* SYMBOL;
 
 HANDLE open_library(char *path);
-char* open_library_error();
+const char *open_library_error();
 int close_library(HANDLE handle);
 SYMBOL get_symbol(HANDLE handle, char *symbol);
 

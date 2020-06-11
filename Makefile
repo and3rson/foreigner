@@ -12,11 +12,15 @@ ifeq ($(UNAME),Darwin)
 	EXTRA_FLAGS := -Og
 	EXTRA_LIBS :=
 else ifeq ($(UNAME),Linux)
-	PLATFORM := linux
-	CXX := g++
-	LIB_SUFFIX := so
-	EXTRA_FLAGS :=
-	EXTRA_LIBS := -lstdc++ -static-libstdc++ -static-libgcc
+	ifeq ($(CROSS_COMPILE_PLATFORM),)
+		PLATFORM := linux
+		CXX := g++
+		LIB_SUFFIX := so
+		EXTRA_FLAGS :=
+		EXTRA_LIBS := -lstdc++ -static-libstdc++ -static-libgcc
+	else
+$(error Unrecognized cross compilation platform name.)
+	endif
 else
 $(error Unrecognized platform name.)
 endif
@@ -24,6 +28,7 @@ endif
 FOREIGNER_LIB := foreigner.$(LIB_SUFFIX)
 
 FFI_INCLUDES = $(shell pkg-config --cflags --libs libffi)
+
 INCLUDES= \
 		  -I$(GODOTCPP_PATH)/godot_headers \
 		  -I$(GODOTCPP_PATH)/include \

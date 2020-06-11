@@ -9,7 +9,6 @@ typedef void* HANDLE;
 
 #ifdef _WIN32
 #include <windows.h>
-typedef HINSTANCE HANDLE;
 #define IS_WINDOWS
 #endif
 

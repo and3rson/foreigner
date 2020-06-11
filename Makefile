@@ -2,6 +2,7 @@
 GODOTCPP_PATH ?= ../godot-cpp
 GODOT_PATH ?= ../godot
 GODOT_BINARY ?= $(GODOT_PATH)/bin/godot.x11.tools.64
+CROSS_COMPILE_PLATFORM ?=
 
 UNAME := $(shell uname -s)
 ifeq ($(UNAME),Darwin)

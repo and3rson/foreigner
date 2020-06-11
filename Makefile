@@ -27,7 +27,7 @@ endif
 
 FOREIGNER_LIB := foreigner.$(LIB_SUFFIX)
 
-FFI_INCLUDES = $(shell pkg-config --cflags --libs libffi)
+FFI_INCLUDES = $(shell $(PKG_CONFIG_ENV_VARS) pkg-config --static --cflags --libs  libffi)
 
 INCLUDES= \
 		  -I$(GODOTCPP_PATH)/godot_headers \

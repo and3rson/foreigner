@@ -10,6 +10,7 @@ reloadable=true
 X11.64="res://foreigner.so"
 OSX.64="res://foreigner.dylib"
 Windows.64="res://foreigner.dll"
+Server.64="res://foreigner.so"
 
 [dependencies]
 

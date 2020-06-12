@@ -4,6 +4,28 @@ GODOT_PATH ?= ../godot
 GODOT_BINARY ?= $(GODOT_PATH)/bin/godot.x11.tools.64
 CROSS_COMPILE_PLATFORM ?=
 
+#
+# Note: Certain combinations/orders of `-lstdc++`,
+#       `-static-libstdc++ -static-libgcc`, `-Wl,-static`
+#       & `-static` options can cancel each other
+#       out, leading to a dynamically linked `libstdc++`
+#       instead of it being statically linked.
+#
+#       If `-lstdc++` comes *before* `-static-libstdc++ -static-libgcc`
+#       *without* there also being `-static` the result will
+#       be a dynamically linked `libstdc++` in spite of the
+#       `-static-libstdc++` option.
+#
+#      This is all *excellently* explained in this post:
+#
+#         <https://stackoverflow.com/questions/44488972/static-libstdc-works-on-g-but-not-on-pure-gcc#44527954>
+#
+#      The dynamic/static link status can be verified via
+#      the output of:
+#
+#         ldd foreinger.so
+#
+
 # Uncomment this for additional linker log output
 # which can be helpful for diagnosing static vs dynamic
 # linking issues.
@@ -23,7 +45,7 @@ else ifeq ($(UNAME),Linux)
 		CXX := g++
 		LIB_SUFFIX := so
 		EXTRA_FLAGS :=
-		EXTRA_LIBS := -lstdc++ -static-libstdc++ -static-libgcc
+		EXTRA_LIBS := -static-libstdc++ -static-libgcc
 	else
 $(error Unrecognized cross compilation platform name.)
 	endif
@@ -49,7 +71,7 @@ FLAGS = -ggdb -fPIC $(EXTRA_FLAGS)
 all: $(FOREIGNER_LIB)
 
 $(FOREIGNER_LIB): src/*.cpp src/*.h
-	$(CXX) $(VERBOSE_LINK) -shared src/*.cpp -o $(FOREIGNER_LIB) $(LIBS) $(INCLUDES) $(FLAGS)
+	$(CXX) $(VERBOSE_LINK) -shared src/*.cpp -o $(FOREIGNER_LIB) $(FLAGS) $(LIBS) $(INCLUDES)
 
 testlib.$(LIB_SUFFIX): testlib/*.cpp
 	$(CXX) $(VERBOSE_LINK) -shared testlib/*.cpp -o testlib.$(LIB_SUFFIX) $(EXTRA_FLAGS) $(EXTRA_LIBS)

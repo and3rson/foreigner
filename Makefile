@@ -37,7 +37,7 @@ INCLUDES= \
 		  -L$(GODOTCPP_PATH)/bin \
 		  $(FFI_INCLUDES)
 
-LIBS = -lgodot-cpp.$(PLATFORM).debug.64 -lffi $(EXTRA_LIBS)
+LIBS = -lgodot-cpp.$(PLATFORM).debug.64 $(EXTRA_LIBS)
 FLAGS = -ggdb -fPIC $(EXTRA_FLAGS)
 
 all: $(FOREIGNER_LIB)

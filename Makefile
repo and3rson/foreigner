@@ -45,10 +45,10 @@ all: $(FOREIGNER_LIB)
 $(FOREIGNER_LIB): src/*.cpp src/*.h
 	$(CXX) -shared src/*.cpp -o $(FOREIGNER_LIB) $(LIBS) $(INCLUDES) $(FLAGS)
 
-testlib.so: testlib/*.cpp
-	$(CXX) -shared testlib/*.cpp -o testlib.so $(EXTRA_FLAGS)
+testlib.$(LIB_SUFFIX): testlib/*.cpp
+	$(CXX) -shared testlib/*.cpp -o testlib.$(LIB_SUFFIX) $(EXTRA_FLAGS) $(EXTRA_LIBS)
 
-test: $(FOREIGNER_LIB) testlib.so
+test: $(FOREIGNER_LIB) testlib.$(LIB_SUFFIX)
 	$(GODOT_BINARY) --no-window -s test/test.gd
 
 clean:

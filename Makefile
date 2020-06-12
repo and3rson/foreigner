@@ -4,6 +4,12 @@ GODOT_PATH ?= ../godot
 GODOT_BINARY ?= $(GODOT_PATH)/bin/godot.x11.tools.64
 CROSS_COMPILE_PLATFORM ?=
 
+# Uncomment this for additional linker log output
+# which can be helpful for diagnosing static vs dynamic
+# linking issues.
+#
+#VERBOSE_LINK := -Wl,-v
+
 UNAME := $(shell uname -s)
 ifeq ($(UNAME),Darwin)
 	PLATFORM := osx
@@ -43,10 +49,10 @@ FLAGS = -ggdb -fPIC $(EXTRA_FLAGS)
 all: $(FOREIGNER_LIB)
 
 $(FOREIGNER_LIB): src/*.cpp src/*.h
-	$(CXX) -shared src/*.cpp -o $(FOREIGNER_LIB) $(LIBS) $(INCLUDES) $(FLAGS)
+	$(CXX) $(VERBOSE_LINK) -shared src/*.cpp -o $(FOREIGNER_LIB) $(LIBS) $(INCLUDES) $(FLAGS)
 
 testlib.$(LIB_SUFFIX): testlib/*.cpp
-	$(CXX) -shared testlib/*.cpp -o testlib.$(LIB_SUFFIX) $(EXTRA_FLAGS) $(EXTRA_LIBS)
+	$(CXX) $(VERBOSE_LINK) -shared testlib/*.cpp -o testlib.$(LIB_SUFFIX) $(EXTRA_FLAGS) $(EXTRA_LIBS)
 
 test: $(FOREIGNER_LIB) testlib.$(LIB_SUFFIX)
 	$(GODOT_BINARY) --no-window -s test/test.gd

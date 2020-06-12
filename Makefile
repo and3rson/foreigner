@@ -66,7 +66,7 @@ INCLUDES= \
 		  $(FFI_INCLUDES)
 
 LIBS = -lgodot-cpp.$(PLATFORM).debug.64 $(EXTRA_LIBS)
-FLAGS = -ggdb -fPIC $(EXTRA_FLAGS)
+FLAGS = -ggdb -fPIC $(EXTRA_FLAGS) -Wl,-static
 
 all: $(FOREIGNER_LIB)
 

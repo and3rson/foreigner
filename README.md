@@ -79,3 +79,7 @@ prints(library.invoke('SteamAPI_IsSteamRunning'))  # Prints 1
 - Only Linux is supported right now. This is easy to improve.
 - Memory leaks are possible. This needs some minor attention.
 - Pointer sizes should be added for 8-, 16-, 32-, & 64-bit pointers. Currently uint64_t* is used.
+
+# Maintainers
+@and3rson - author
+@follower - maintainer

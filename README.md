@@ -81,5 +81,6 @@ prints(library.invoke('SteamAPI_IsSteamRunning'))  # Prints 1
 - Pointer sizes should be added for 8-, 16-, 32-, & 64-bit pointers. Currently uint64_t* is used.
 
 # Maintainers
-@and3rson - author
-@follower - maintainer
+
+  - [@and3rson](//github.com/anderson) - author
+  - [@follower](//github.com/follower) - maintainer

@@ -2,6 +2,10 @@
 
 This repo contains a WIP variant of a FFI adapter for Godot.
 
+# IMPORTANT: This project is looking for maintainers!
+
+## Please open an issue if you are willing to maintain this library.
+
 # Compiling & testing
 
 ```bash

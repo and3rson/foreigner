@@ -8,8 +8,7 @@ typedef void* HANDLE;
 #endif
 
 #ifdef _WIN32
-#include <Windows.h>
-typedef HINSTANCE HANDLE;
+#include <windows.h>
 #define IS_WINDOWS
 #endif
 
@@ -18,7 +17,7 @@ typedef HINSTANCE HANDLE;
 typedef void* SYMBOL;
 
 HANDLE open_library(char *path);
-char* open_library_error();
+const char *open_library_error();
 int close_library(HANDLE handle);
 SYMBOL get_symbol(HANDLE handle, char *symbol);
 

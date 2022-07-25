@@ -8,7 +8,12 @@ reloadable=true
 [entry]
 
 X11.64="res://foreigner.so"
+OSX.64="res://foreigner.dylib"
+Windows.64="res://foreigner.dll"
+Server.64="res://foreigner.so"
 
 [dependencies]
 
 X11.64=[  ]
+OSX.64=[  ]
+#Windows.64=["/usr/x86_64-w64-mingw32/bin/libffi-7.dll"]

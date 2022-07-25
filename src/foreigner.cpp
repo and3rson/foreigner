@@ -29,13 +29,17 @@ Ref<ForeignLibrary> Foreigner::open(String path) {
     Godot::print("Foreigner: Loading shared library " + path);
     // TODO: Windows/Linux/Mac
     HANDLE handle = open_library(path.alloc_c_string());
-    char *error = open_library_error();
-    if (error) {
-        // Opening failed
-        Godot::print_error(
-                String("Foreigner: Failed to load " + path + ": " + String(error)),
-                __FUNCTION__, __FILE__, __LINE__
-        );
+
+    if (handle==nullptr) {
+        const char *error = open_library_error();
+
+        if (error) {
+            // Opening failed
+            Godot::print_error(
+                    String("Foreigner: Failed to load " + path + ": " + String(error)),
+                    __FUNCTION__, __FILE__, __LINE__
+            );
+        }
         return 0;
     }
 

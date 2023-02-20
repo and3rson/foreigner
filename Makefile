@@ -1,29 +1,46 @@
 # Yup, I have them riiight there.
 GODOTCPP_PATH ?= ../godot-cpp
 GODOT_PATH ?= ../godot
-GODOT_BINARY = $(GODOT_PATH)/bin/godot.x11.tools.64
+GODOT_BINARY ?= $(GODOT_PATH)/bin/godot.x11.tools.64
 
-FFI_INCLUDES = $(shell pkg-config --cflags libffi)
+UNAME := $(shell uname -s)
+ifeq ($(UNAME),Darwin)
+	PLATFORM := osx
+	CXX := clang++
+	LIB_SUFFIX := dylib
+	EXTRA_FLAGS := -Og
+	EXTRA_LIBS :=
+else
+	PLATFORM := linux
+	CXX := g++
+	LIB_SUFFIX := so
+	EXTRA_FLAGS :=
+	EXTRA_LIBS := -lstdc++ -static-libstdc++ -static-libgcc
+endif
+
+FOREIGNER_LIB := foreigner.$(LIB_SUFFIX)
+
+FFI_INCLUDES = $(shell pkg-config --cflags --libs libffi)
 INCLUDES= \
-		  -I$(GODOT_PATH)/modules/gdnative/include \
+		  -I$(GODOTCPP_PATH)/godot_headers \
 		  -I$(GODOTCPP_PATH)/include \
 		  -I$(GODOTCPP_PATH)/include/core \
 		  -I$(GODOTCPP_PATH)/include/gen \
 		  -L$(GODOTCPP_PATH)/bin \
 		  $(FFI_INCLUDES)
 
-LIBS = -lgodot-cpp.linux.debug.64 -lstdc++ -lffi -static-libstdc++ -static-libgcc
-FLAGS = -ggdb -fPIC
+LIBS = -lgodot-cpp.$(PLATFORM).debug.64 -lffi $(EXTRA_LIBS)
+FLAGS = -ggdb -fPIC $(EXTRA_FLAGS)
 
-all: foreigner.so
+all: $(FOREIGNER_LIB)
 
-foreigner.so: src/*.cpp src/*.h
-	gcc -shared src/*.cpp -o foreigner.so $(LIBS) $(INCLUDES) $(FLAGS)
+$(FOREIGNER_LIB): src/*.cpp src/*.h
+	$(CXX) -shared src/*.cpp -o $(FOREIGNER_LIB) $(LIBS) $(INCLUDES) $(FLAGS)
 
 testlib.so: testlib/*.cpp
-	gcc -shared testlib/*.cpp -o testlib.so
+	$(CXX) -shared testlib/*.cpp -o testlib.so $(EXTRA_FLAGS)
 
-test: foreigner.so testlib.so
+test: $(FOREIGNER_LIB) testlib.so
 	$(GODOT_BINARY) --no-window -s test/test.gd
 
 clean:
